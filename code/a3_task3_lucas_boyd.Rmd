@@ -1,0 +1,48 @@
+---
+title: "Task 3 - Urchins"
+author: "Lucas Boyd"
+date: "10/24/2021"
+output: html_document
+---
+## Overview
+Insert a few sentences about what I'm doing here. 
+
+
+```{r setup, include=TRUE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+# attach packages
+library(tidyverse)
+library(here)
+library(janitor)
+library(kableExtra)
+```
+
+## Reading in the urchins data 
+*Data Citation:*Reed, D. 2020. SBC LTER: Reef: Long-term experiment: Kelp removal: Urchin size frequency distribution ver 20. Environmental Data Initiative. https://doi.org/10.6073/pasta/5a1e9ef03aa47bd2225c0bb98a02a63b. 
+
+Summary of variables:
+date: date urchin recorded
+site: site along the SB coast (the five sites can be explored here)
+treatment: indicates experimental kelp treatments:
+CONTROL = giant kelp left intact
+ANNUAL = giant kelp is “removed...once each winter and allowed to re-colonize over the course of the year”
+size: urchin diameter (cm), measured to the nearest 0.5 cm
+Scientific_name: scientific name
+common_name: species common name (either red or purple urchin)
+```{r}
+urchins <- read_csv(here("data", "urchins.csv")) %>% # read in the urchins data
+  clean_names() # clean up the column names 
+```
+## Visualizing - Histogram 
+
+Create a histogram that shows the distribution of sizes for red and purple urchins. 
+
+```{r, fig.cap = "Fig. 1 compares the distribution of sizes (diameter, in cm) for red and purple urchins. Note: Urchin Diameter was recorded to the nearest 0.5cm. "}
+ggplot(data = urchins, aes(x = size, fill = common_name)) + # creating a ggplot with urchin size on the x axis
+  geom_histogram(bins = 10, color = "black") + # creating a histogram and adjusting color and number of bins
+  labs(x = "Urchin Diameter (cm)", y = element_blank()) + # changing the labels and removing the y axis label 
+  theme_minimal() + # changing the theme
+  theme(legend.title = element_blank()) # removing the legend title
+```
+
