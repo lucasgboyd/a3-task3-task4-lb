@@ -62,12 +62,14 @@ Create a histogram that shows the distribution of sizes for red and
 purple urchins.
 
 ```{r, fig.cap = "Fig. 1 compares the distribution of sizes (diameter, in cm) for red and purple urchins. Note: Urchin Diameter was recorded to the nearest 0.5cm. "}
-ggplot(data = urchins, aes(x = size, fill = common_name)) + # creating a ggplot with urchin size on the x axis
-  geom_histogram(bins = 10, color = "black") + # creating a histogram and adjusting color and number of bins
-  labs(x = "Urchin Diameter (cm)", y = element_blank()) + # changing the labels and removing the y axis label 
-  theme_minimal() + # changing the theme
-  theme(legend.title = element_blank(), # removing the legend title
-        legend.position = "top",) # moving the legend title
+ggplot(data = urchins, aes(x = size)) + # creating a ggplot with urchin size on the x axis
+  geom_histogram(bins = 10, color = "black", fill = "cyan3") + # creating a histogram
+  facet_wrap(~ common_name) + 
+  labs(x = "Urchin Diameter (cm)", # changing the labels and removing the y axis label 
+       y = element_blank(), 
+       title = "Urchin Size Distribution by Species") + 
+  theme_grey() + # changing the theme
+theme(plot.title = element_text(face = "bold", hjust = 0.5))
 ```
 
 ### Descriptive Statistics Table
