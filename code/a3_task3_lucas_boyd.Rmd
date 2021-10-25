@@ -16,9 +16,10 @@ distribution of urchin populations off the coast of Santa Barbara over a
 12 year period. First, it compares size distributions between species of
 urchins, then looks at urchin populations across all sites over time.
 
+### Setup
 ```{r setup, include=TRUE, warning = FALSE, message = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-options(digits = 3) # reducing decimal places to 3 sig figs
+options(digits = 3) # reducing decimal places to 3 significant figures
 
 # attach packages
 library(tidyverse)
@@ -153,7 +154,7 @@ ggplot(data = purple_urchins_summary, # ggplot of summary data
            y = n, # total count on the y
            color = site_full)) + # color by site name
   geom_line() + #create a line graph
-  theme_minimal() + # chang the theme
+  theme_minimal() + # change the theme
   theme(legend.title = element_blank()) + # removing legend title
   labs(x = "Year", y = "Purple Urchins Observed") # changing label names
 ```

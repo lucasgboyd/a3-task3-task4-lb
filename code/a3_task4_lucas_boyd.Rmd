@@ -8,26 +8,30 @@ editor_options:
     wrap: 72
 ---
 
+## Overview
+
+This document wrangles and visualizes data from the Santa Barbara Long Term Ecological Research Program. This code examines purple urchin sizes at the Naples Reef in 2010 andvisualizes the data in a QQplot. Then, the code compares mean urchin size in the annual treatment versus control groups. 
+
+## Setup
 ```{r setup, include=TRUE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+options(digits = 3) # changing number of significant figures
 # attaching packages
 library(tidyverse)
 library(here)
 library(janitor)
+library(lubridate)
+library(kableExtra)
 ```
 
-## Overview
+## Data
 
-Insert a short description here.
-
-## Reading in the data
-
-Data Citation: Reed, D. 2020. SBC LTER: Reef: Long-term experiment: Kelp
-removal: Urchin size frequency distribution ver 20. Environmental Data
-Initiative.
+**Data Citation:** Reed, D. 2020. SBC LTER: Reef: Long-term experiment:
+Kelp removal: Urchin size frequency distribution ver 20. Environmental
+Data Initiative.
 <https://doi.org/10.6073/pasta/5a1e9ef03aa47bd2225c0bb98a02a63b>.
 
-Summary of variables:
+**Summary of variables:**
 
 -   date: date urchin recorded
 
@@ -36,7 +40,6 @@ Summary of variables:
 -   treatment: indicates experimental kelp treatments:
 
     -   CONTROL = giant kelp left intact
-
     -   ANNUAL = giant kelp is "removed...once each winter and allowed
         to re-colonize over the course of the year"
 
@@ -46,6 +49,53 @@ Summary of variables:
 
 -   common_name: species common name (either red or purple urchin)
 
-```{r}
+## Data wrangling
 
+Wrangling data to only include observations of purple urchins at the
+Naples Reef.
+
+```{r}
+urchins_naples <- read_csv(here("data", "urchins.csv")) %>% # reading in the data
+  clean_names() %>% # cleaning up the names
+  filter(common_name == "Purple Urchin", # only retain purple urchin observations 
+         site == "NAPL") %>% # at the naples site
+  mutate(date_new = mdy(date)) %>% # converting dates to nice format
+  mutate(year = year(date_new)) %>% # adding a column for year
+  filter(year == "2010")
 ```
+
+## Exploratory plots
+Exploring faceted histograms and qqplots to visually represent the data. 
+```{r}
+ggplot(data = urchins_naples, aes(x = size, fill = treatment)) + # creating faceted histogram of the data
+         geom_histogram(bins = 10, color = "black") + 
+  facet_wrap(~ treatment)
+```
+
+```{r}
+qplot(sample = size, data = urchins_naples, color = treatment) +
+  facet_wrap(~ treatment) # making a qqplot to represent the data
+```
+
+The control treatment group is more normally distributed, while the annual treatment group is highly concentrated on the lower end of the range of values. This seems to indicate that the annual treatment does have an effect on the size of purple urchins. 
+
+## Summarizing data
+
+```{r}
+urchins_naples %>% # starting with urchins_naples
+  group_by(treatment) %>% # grouping by treatment
+  summarize(mean_size = mean(size), # creating a summary table with mean, SD and sample size
+            standard_dev = sd(size), 
+            sample_size = n()) %>% 
+  kable(col.names = c("Treatment", # renaming the columns
+                      "Mean Diameter (cm)", 
+                      "Standard Devation (cm)", 
+                      "Sample Size"), 
+        caption = "Fig. 1 looks at mean purple urchin diameter (cm) across treatment conditions at Naples Reef in 2010, comparing the annual treatment to the control.") %>% # adding a figure caption
+  kable_minimal() %>% # changing the theme
+  kable_styling(full_width = FALSE, font = 14) # styling the table
+  
+```
+
+
+## END TASK
