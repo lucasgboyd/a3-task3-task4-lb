@@ -190,13 +190,18 @@ library(lubridate)</code></pre>
 <h3>Reading in the urchins data</h3>
 <p><strong>Data Citation:</strong> Reed, D. 2020. SBC LTER: Reef: Long-term experiment: Kelp removal: Urchin size frequency distribution ver 20. Environmental Data Initiative. <a href="https://doi.org/10.6073/pasta/5a1e9ef03aa47bd2225c0bb98a02a63b" class="uri">https://doi.org/10.6073/pasta/5a1e9ef03aa47bd2225c0bb98a02a63b</a>.</p>
 <p><strong>Summary of variables:</strong></p>
-<p><em>date</em>: date urchin recorded</p>
-<p><em>site:</em> site along the SB coast (the five sites can be explored here)</p>
-<p><em>TREATMENT:</em> indicates experimental kelp treatments</p>
-<p><em>CONTROL</em> = giant kelp left intact ANNUAL = giant kelp is “removed…once each winter and allowed to re-colonize over the course of the year”</p>
-<p><em>size:</em> urchin diameter (cm), measured to the nearest 0.5 cm</p>
-<p><em>scientific_name</em> = scientific name</p>
-<p><em>common_name</em>: species common name (either red or purple urchin)</p>
+<ul>
+<li><p>date: date urchin recorded</p></li>
+<li><p>site: site along the SB coast (the five sites can be explored here)</p></li>
+<li><p>treatment: indicates experimental kelp treatments</p>
+<ul>
+<li><p>CONTROL = giant kelp left intact</p></li>
+<li><p>ANNUAL = giant kelp is “removed…once each winter and allowed to re-colonize over the course of the year”</p></li>
+</ul></li>
+<li><p>size: urchin diameter (cm), measured to the nearest 0.5 cm</p></li>
+<li><p>scientific_name = scientific name</p></li>
+<li><p>common_name: species common name (either red or purple urchin)</p></li>
+</ul>
 <pre class="r"><code>urchins &lt;- read_csv(here(&quot;data&quot;, &quot;urchins.csv&quot;)) %&gt;% # read in the urchins data
   clean_names() # clean up the column names </code></pre>
 </div>

@@ -10,7 +10,11 @@ editor_options:
 
 # Overview {.tabset .tabset-fade}
 
-This document wrangles and visualizes data from the Santa Barbara Long Term Ecological Research Program, in which they observed size distribution of urchin populations off the coast of Santa Barbara over a 12 year period. First, it compares size distributions between species of urchins, then looks at urchin populations across all sites over time. 
+This document wrangles and visualizes data from the Santa Barbara Long
+Term Ecological Research Program, in which they observed size
+distribution of urchin populations off the coast of Santa Barbara over a
+12 year period. First, it compares size distributions between species of
+urchins, then looks at urchin populations across all sites over time.
 
 ```{r setup, include=TRUE, warning = FALSE, message = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
@@ -33,21 +37,22 @@ Data Initiative.
 
 **Summary of variables:**
 
-*date*: date urchin recorded
+-   date: date urchin recorded
 
-*site:* site along the SB coast (the five sites can be explored here)
+-   site: site along the SB coast (the five sites can be explored here)
 
-*TREATMENT:* indicates experimental kelp treatments
+-   treatment: indicates experimental kelp treatments
 
-*CONTROL* = giant kelp left intact ANNUAL = giant kelp is
-"removed...once each winter and allowed to re-colonize over the course
-of the year"
+    -   CONTROL = giant kelp left intact
 
-*size:* urchin diameter (cm), measured to the nearest 0.5 cm
+    -   ANNUAL = giant kelp is "removed...once each winter and allowed
+        to re-colonize over the course of the year"
 
-*scientific_name* = scientific name
+-   size: urchin diameter (cm), measured to the nearest 0.5 cm
 
-*common_name*: species common name (either red or purple urchin)
+-   scientific_name = scientific name
+
+-   common_name: species common name (either red or purple urchin)
 
 ```{r}
 urchins <- read_csv(here("data", "urchins.csv")) %>% # read in the urchins data
@@ -129,14 +134,19 @@ purple_urchins <- urchins %>%  # starting with urchins
 ```
 
 ### Data Wrangling - by site and year
-Writing code to make a table containing total number of purple urchins observed by site and year. 
+
+Writing code to make a table containing total number of purple urchins
+observed by site and year.
+
 ```{r}
 purple_urchins_summary <- purple_urchins %>% # storing a new data frame from purple_urchins
   count(site_full, year) # counting total observations by site and year
 ```
 
 ### Data visualization - by site and year
-Visualizing the purple urchin counts by site and year. 
+
+Visualizing the purple urchin counts by site and year.
+
 ```{r, fig.cap = "Fig 3. shows total observations of purple urchins each year at each site, seemingly indicating a downward trend in purple urchin population across all sites." }
 ggplot(data = purple_urchins_summary, # ggplot of summary data
        aes(x = year, # year on the x axis
@@ -148,13 +158,11 @@ ggplot(data = purple_urchins_summary, # ggplot of summary data
   labs(x = "Year", y = "Purple Urchins Observed") # changing label names
 ```
 
-
-
-
-
-
-
 #### Analysis
-This graph seems to show a declining urchin population across all sites in which observations were taken. In order to determine whether this data is reflective of actual changes in urchin population, we would need to know the frequency of data collection. How often were the divers going out to collect observations? If they were collecting less data, this could also explain the fewer observations over time. 
 
-
+This graph seems to show a declining urchin population across all sites
+in which observations were taken. In order to determine whether this
+data is reflective of actual changes in urchin population, we would need
+to know the frequency of data collection. How often were the divers
+going out to collect observations? If they were collecting less data,
+this could also explain the fewer observations over time.
