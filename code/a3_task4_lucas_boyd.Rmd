@@ -10,7 +10,7 @@ editor_options:
 
 ## Overview
 
-This document wrangles and visualizes data from the Santa Barbara Long Term Ecological Research Program. This code examines purple urchin sizes at the Naples Reef in 2010 andvisualizes the data in a QQplot. Then, the code compares mean urchin size in the annual treatment versus control groups. 
+This document wrangles and visualizes data from the Santa Barbara Long Term Ecological Research Program. This code examines purple urchin sizes at the Naples Reef in 2010 and visualizes the data in a QQplot. Then, the code compares mean urchin size in the annual treatment versus control groups. 
 
 ## Setup
 ```{r setup, include=TRUE, message = FALSE, warning = FALSE}
